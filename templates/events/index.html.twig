@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Tous les évènements :
+{% endblock %}
+
+
+{% block body %}
+<h1>Tous les évènements :</h1>
+<ul>
+    {% for event in events %}
+        <li>
+           
+            <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">évènement n°{{ event.id }}</h5>
+    <h3 class="card-title">{{ event.title }}</h3>
+    <h6 class="card-subtitle mb-2 text-muted">{{ event.startAt|date('d/m/Y H:i') }}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">Ajouté le {{ event.createdAt|date('d/m/Y') }}</h6>
+    <p class="card-text">{{ event.description }}</p>
+ <a href="{{ path('app_events_show', { 'id': event.id }) }}"  class="card-link btn btn-primary">Voir l'évènement.</a>
+ <a href="" class="card-link btn btn-primary">S'inscrire à l'évènement.</a>
+
+  </div>
+</div>
+        </li>
+    {% else %}
+        <li>Aucun évènement trouvé.</li>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+Détail de l'évènement
+{% endblock %}
+
+{% block body %}
+
+{% if event.user.id is same as(app.user.id) %}
+<a href="{{ path('app_events_edit', {'id': event.id}) }}" class="btn btn-warning">Modifier l'évènement</a>
+<a href="{{ path('app_events_delete', {'id': event.id}) }}" class="btn btn-danger">Supprimer l'évènement</a>
+{% endif %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">évènement n°{{ event.id }}</h5>
+    <h3 class="card-title">{{ event.title }}</h3>
+    <h6 class="card-subtitle mb-2 text-muted">{{ event.startAt|date('d/m/Y H:i') }}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">Ajouté le {{ event.createdAt|date('d/m/Y') }}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">Par {{ event.user.name }}</h6>
+    <p class="card-text">{{ event.description }}</p>
+
+    {% set isUserAttending = false %}
+
+{% for attendee in event.attendees %}
+    {% if app.user.id is same as(attendee.user.id) %}
+        {% set isUserAttending = true %}
+    {% endif %}
+{% endfor %}
+
+{% if not isUserAttending %}
+    <a href="{{ path('app_events_join', {'id': event.id}) }}" class="card-link btn btn-primary">S'inscrire à l'évènement.</a>
+{% else %}
+    <a href="{{ path('app_events_leave', {'id': event.id}) }}" class="card-link btn btn-danger">Se désinscrire de l'évènement.</a>
+{% endif %}
+
+  
+    </div>
+</div>
+<div>
+{% if event.attendees|length > 0 %}
+<h3>Participants à l'évènement :</h3>
+<ul>
+{% for attendee in event.attendees %}
+    <li>{{ attendee.user.name }} </li>
+{% endfor %}
+</ul>
+{% endif %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Commentaires sur l'évènement :</h5>
+    </div>
+</div>
+{% endblock %}

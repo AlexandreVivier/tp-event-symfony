@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Votre profil
+{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Votre profil</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+        <h2 class="text-center">Votre nom : </h2>
+            <h2 class="text-center">{{ user.name }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Votre email : </h3>
+            <h3 class="text-center">{{ user.email }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12\">
+            <a href="{{ path('app_account_edit') }}" class="btn btn-warning">Modifier vos infos</a>
+        </div>
+    </div>
+{% endblock %}
